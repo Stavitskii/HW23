@@ -9,6 +9,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
+def do_query(params):
+    with open(os.path.join(DATA_DIR, data["file_name"])) as f:
+
+
+    if params['cmd1'] == 'filter':
+
+
+
 @app.route("/perform_query", methods=["POST"])
 def perform_query():
     # получить параметры query и file_name из request.args, при ошибке вернуть ошибку 400
@@ -20,7 +28,8 @@ def perform_query():
     file_name = data["file_name"]
     if not os.path.exists(os.path.join(DATA_DIR, file_name)):
         raise BadRequest
-    return "test"
+    return ""
+#app.response_class('Hello', content_type="text/plain")
 
 
 if __name__ == "__main__":
