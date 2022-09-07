@@ -9,23 +9,32 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
+def do_cmd(cmd, value, data):
+
+    if cmd == 'filter':
+        result = list(filter(lambda record: value in record, data))
+    elif cmd == 'map':
+        col_num = int(value)
+        result = list(map(lambda record: record.split()[col_num], data))
+    elif cmd == 'unique':
+        result = list(set(data))
+    elif cmd == 'sort':
+        reverse = (value == 'desc')
+        result = sorted(data, reverse=reverse)
+    else:
+        raise BadRequest
+    return result
+
+
+
 def do_query(params):
     with open(os.path.join(DATA_DIR, params["file_name"])) as f:
         file_data = f.readlines()
-
-    if params['cmd1'] == 'filter':
-        result = filter(lambda record: params["value1"] in record, file_data)
-    elif params['cmd1'] == 'map':
-        col_num = int(params["value1"])
-        result = map(lambda record: record.split()[col_num], file_data)
-    elif params['cmd1'] == 'unique':
-        result = set(file_data)
-    elif params['cmd1'] == 'sort':
-        reverse = params["value1"] == 'desc'
-        result = sorted(file_data, reverse=reverse)
+    pass
 
 
-    return result
+
+
 
 
 @app.route("/perform_query", methods=["POST"])
