@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from werkzeug.exceptions import BadRequest
 
 app = Flask(__name__)
@@ -10,11 +10,13 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
 def do_query(params):
-    with open(os.path.join(DATA_DIR, data["file_name"])) as f:
-
+    with open(os.path.join(DATA_DIR, params["file_name"])) as f:
+        file_data = f.readlines()
 
     if params['cmd1'] == 'filter':
+        result = filter(lambda record: params["value1"] in record, file_data)
 
+    return list(result)
 
 
 @app.route("/perform_query", methods=["POST"])
@@ -28,8 +30,11 @@ def perform_query():
     file_name = data["file_name"]
     if not os.path.exists(os.path.join(DATA_DIR, file_name)):
         raise BadRequest
-    return ""
-#app.response_class('Hello', content_type="text/plain")
+
+    return jsonify(do_query(data))
+
+
+# app.response_class('Hello', content_type="text/plain")
 
 
 if __name__ == "__main__":
