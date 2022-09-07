@@ -15,11 +15,17 @@ def do_query(params):
 
     if params['cmd1'] == 'filter':
         result = filter(lambda record: params["value1"] in record, file_data)
-    elif params['cmd2'] == 'map':
+    elif params['cmd1'] == 'map':
         col_num = int(params["value1"])
         result = map(lambda record: record.split()[col_num], file_data)
+    elif params['cmd1'] == 'unique':
+        result = set(file_data)
+    elif params['cmd1'] == 'sort':
+        reverse = params["value1"] == 'desc'
+        result = sorted(file_data, reverse=reverse)
 
-    return list(result)
+
+    return result
 
 
 @app.route("/perform_query", methods=["POST"])
