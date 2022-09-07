@@ -15,6 +15,9 @@ def do_query(params):
 
     if params['cmd1'] == 'filter':
         result = filter(lambda record: params["value1"] in record, file_data)
+    elif params['cmd2'] == 'map':
+        col_num = int(params["value1"])
+        result = map(lambda record: record.split()[col_num], file_data)
 
     return list(result)
 
