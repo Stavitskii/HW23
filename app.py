@@ -30,9 +30,9 @@ def do_query(params):
         file_data = f.readlines()
     res = file_data
 
-    if 'cmd1' in params.keys:
+    if 'cmd1' in params.keys():
         res = do_cmd(params['cmd1'], params['value1'], res)
-    if 'cmd2' in params.keys:
+    if 'cmd2' in params.keys():
         res = do_cmd(params['cmd2'], params['value2'], res)
     return res
 
