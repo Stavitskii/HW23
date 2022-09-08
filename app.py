@@ -20,6 +20,8 @@ def do_cmd(cmd, value, data):
     elif cmd == 'sort':
         reverse = (value == 'desc')
         result = sorted(data, reverse=reverse)
+    elif cmd == 'limit':
+        result = data[:int(value)]
     else:
         raise BadRequest
     return result
@@ -34,6 +36,8 @@ def do_query(params):
         res = do_cmd(params['cmd1'], params['value1'], res)
     if 'cmd2' in params.keys():
         res = do_cmd(params['cmd2'], params['value2'], res)
+    if 'cmd3' in params.keys():
+        res = do_cmd(params['cmd3'], params['value3'], res)
     return res
 
 
