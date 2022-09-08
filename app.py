@@ -10,7 +10,6 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
 def do_cmd(cmd, value, data):
-
     if cmd == 'filter':
         result = list(filter(lambda record: value in record, data))
     elif cmd == 'map':
@@ -26,15 +25,16 @@ def do_cmd(cmd, value, data):
     return result
 
 
-
 def do_query(params):
     with open(os.path.join(DATA_DIR, params["file_name"])) as f:
         file_data = f.readlines()
-    pass
+    res = file_data
 
-
-
-
+    if 'cmd1' in params.keys:
+        res = do_cmd(params['cmd1'], params['value1'], res)
+    if 'cmd2' in params.keys:
+        res = do_cmd(params['cmd2'], params['value2'], res)
+    return res
 
 
 @app.route("/perform_query", methods=["POST"])
